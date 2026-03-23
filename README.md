@@ -61,7 +61,7 @@ User login with saved deal history
 
 🔗 Live Site
 
-https://kchamelledesigns.github.io/Investor-Cruncher/
+https://kchamelledesigns.github.io/investor-cruncher/
 
 📫 Contact
 
