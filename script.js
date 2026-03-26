@@ -1,56 +1,47 @@
-const leadForm = document.getElementById('lead-form');
-const calcForm = document.getElementById('calc-form');
-const successMsg = document.getElementById('success');
-const calculateBtn = document.getElementById('calculate-btn');
-const resultEl = document.getElementById('result');
-const dealsList = document.getElementById('deals-list');
+let dealChart = null;
+let currentUser = "";
 
-// Show calculator after lead form
-leadForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  leadForm.style.display = 'none';
-  calcForm.style.display = 'block';
+// LOGIN
+function login() {
+  const email = document.getElementById('email').value.trim();
+  if (!email) return alert("Enter email");
 
-  loadDeals(); // load existing deals when entering calculator
-});
+  currentUser = email;
 
-// Attach event listener
-calculateBtn.addEventListener('click', calculateMAO);
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+
+  document.getElementById('user-email').innerText = email;
+
+  loadDeals();
+}
+
+// LOGOUT
+function logout() {
+  location.reload();
+}
+
+// CALCULATE
+document.getElementById('calculate-btn').addEventListener('click', calculateMAO);
 
 function calculateMAO() {
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
   const arv = parseFloat(document.getElementById('arv').value);
   const repairs = parseFloat(document.getElementById('repairs').value);
   const profit = parseFloat(document.getElementById('profit').value);
   const assignment = parseFloat(document.getElementById('assignment').value);
   const closing = parseFloat(document.getElementById('closing').value);
 
-  // Validation
-  if (!name || !email) {
-    alert('Please enter your name and email.');
-    return;
-  }
-
-  if (
-    isNaN(arv) ||
-    isNaN(repairs) ||
-    isNaN(profit) ||
-    isNaN(assignment) ||
-    isNaN(closing)
-  ) {
-    alert('Please fill out all calculation fields.');
+  if (isNaN(arv) || isNaN(repairs) || isNaN(profit) || isNaN(assignment) || isNaN(closing)) {
+    alert("Fill all fields");
     return;
   }
 
   const buyerProfit = arv * (profit / 100);
   const mao = arv - repairs - buyerProfit - assignment - closing;
 
-  resultEl.innerText = `Maximum Allowable Offer (MAO): $${mao.toFixed(2)}`;
+  document.getElementById('result').innerText = `MAO: $${mao.toFixed(2)}`;
 
   const deal = {
-    name,
-    email,
     arv,
     repairs,
     profit,
@@ -60,47 +51,105 @@ function calculateMAO() {
     date: new Date().toISOString()
   };
 
-  const existingDeals = JSON.parse(localStorage.getItem(email)) || [];
-  existingDeals.push(deal);
-  localStorage.setItem(email, JSON.stringify(existingDeals));
+  const deals = JSON.parse(localStorage.getItem(currentUser)) || [];
+  deals.push(deal);
+  localStorage.setItem(currentUser, JSON.stringify(deals));
 
-  successMsg.style.display = 'block';
-  setTimeout(() => {
-    successMsg.style.display = 'none';
-  }, 3000);
+  showSuccess();
+  renderChart(repairs, buyerProfit, assignment, closing);
+  loadDeals();
 
-  // Reset inputs
+  // reset inputs
   document.getElementById('arv').value = '';
   document.getElementById('repairs').value = '';
   document.getElementById('assignment').value = '';
   document.getElementById('closing').value = '';
-
-  loadDeals(); // refresh dashboard
 }
 
-// 🔥 Load and display deals
+// SUCCESS
+function showSuccess() {
+  const msg = document.getElementById('success');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 3000);
+}
+
+// LOAD DEALS
 function loadDeals() {
-  const email = document.getElementById('email').value.trim();
-  const deals = JSON.parse(localStorage.getItem(email)) || [];
+  const deals = JSON.parse(localStorage.getItem(currentUser)) || [];
+  const list = document.getElementById('deals-list');
 
-  dealsList.innerHTML = '';
+  list.innerHTML = '';
 
-  if (deals.length === 0) {
-    dealsList.innerHTML = '<p>No deals saved yet.</p>';
-    return;
-  }
-
-  deals.reverse().forEach(deal => {
+  deals.forEach((deal, index) => {
     const div = document.createElement('div');
     div.classList.add('deal-card');
 
     div.innerHTML = `
-      <p><strong>ARV:</strong> $${deal.arv}</p>
-      <p><strong>MAO:</strong> $${deal.mao}</p>
-      <p><strong>Profit:</strong> ${deal.profit}%</p>
-      <p><strong>Date:</strong> ${new Date(deal.date).toLocaleDateString()}</p>
+      <p>ARV: $${deal.arv}</p>
+      <p>MAO: $${deal.mao}</p>
+      <p>Profit: ${deal.profit}%</p>
+      <p>Date: ${new Date(deal.date).toLocaleDateString()}</p>
+
+      <div class="deal-actions">
+        <button class="edit-btn" onclick="editDeal(${index})">Edit</button>
+        <button class="delete-btn" onclick="deleteDeal(${index})">Delete</button>
+      </div>
     `;
 
-    dealsList.appendChild(div);
+    list.appendChild(div);
+  });
+
+  updateStats(deals);
+}
+
+// DELETE
+function deleteDeal(index) {
+  let deals = JSON.parse(localStorage.getItem(currentUser)) || [];
+  deals.splice(index, 1);
+  localStorage.setItem(currentUser, JSON.stringify(deals));
+  loadDeals();
+}
+
+// EDIT
+function editDeal(index) {
+  let deals = JSON.parse(localStorage.getItem(currentUser)) || [];
+  const deal = deals[index];
+
+  document.getElementById('arv').value = deal.arv;
+  document.getElementById('repairs').value = deal.repairs;
+  document.getElementById('profit').value = deal.profit;
+  document.getElementById('assignment').value = deal.assignment;
+  document.getElementById('closing').value = deal.closing;
+
+  deals.splice(index, 1);
+  localStorage.setItem(currentUser, JSON.stringify(deals));
+  loadDeals();
+}
+
+// STATS
+function updateStats(deals) {
+  document.getElementById('total-deals').innerText = deals.length;
+
+  const total = deals.reduce((sum, d) => sum + parseFloat(d.mao), 0);
+  const avg = deals.length ? total / deals.length : 0;
+
+  document.getElementById('avg-mao').innerText = `$${avg.toFixed(2)}`;
+}
+
+// CHART
+function renderChart(repairs, profit, assignment, closing) {
+  const ctx = document.getElementById('dealChart').getContext('2d');
+
+  if (dealChart) dealChart.destroy();
+
+  dealChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Repairs', 'Profit', 'Assignment', 'Closing'],
+      datasets: [{
+        data: [repairs, profit, assignment, closing],
+        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+      }]
+    }
   });
 }

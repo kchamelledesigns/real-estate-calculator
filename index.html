@@ -3,73 +3,77 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Real Estate Calculator - Wholesaler Deal Evaluator</title>
+<title>Real Estate SaaS Dashboard</title>
 
-<!-- Link CSS -->
 <link rel="stylesheet" href="style.css" />
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<header>
-<h1>Real Estate Calculator</h1>
-<p>Wholesaler Deal Evaluator Tool</p>
-</header>
-
-<div class="container">
-
-<div class="how-to">
-<h3>How to Use This Tool</h3>
-<ul>
-<li>Enter the ARV (After Repair Value).</li>
-<li>Estimate the repair costs.</li>
-<li>Use default 30% profit or change it if needed.</li>
-<li>Add your assignment fee and closing costs (optional).</li>
-<li>Click "Calculate MAO" to see your Maximum Allowable Offer.</li>
-</ul>
+<!-- LOGIN SCREEN -->
+<div id="login-screen" class="login-screen">
+  <h2>Real Estate Dashboard</h2>
+  <input type="email" id="email" placeholder="Enter your email" />
+  <button onclick="login()">Enter Dashboard</button>
 </div>
 
-<form id="lead-form">
-<label for="name">Your Name:</label>
-<input type="text" id="name" name="name" required>
+<!-- MAIN APP -->
+<div class="app" id="app" style="display:none;">
 
-<label for="email">Your Email:</label>
-<input type="email" id="email" name="email" required>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>My Deals</h2>
+    <p id="user-email"></p>
+    <button onclick="logout()">Logout</button>
+  </aside>
 
-<button type="submit">Start Calculation</button>
-</form>
+  <!-- Main -->
+  <main class="main">
 
-<form id="calc-form" style="display:none;">
-<label for="arv">ARV (After Repair Value):</label>
-<input type="number" id="arv" required>
+    <h1>Deal Dashboard</h1>
 
-<label for="repairs">Estimated Repair Costs:</label>
-<input type="number" id="repairs" required>
+    <!-- Stats -->
+    <div class="stats">
+      <div class="card">
+        <h3>Total Deals</h3>
+        <p id="total-deals">0</p>
+      </div>
+      <div class="card">
+        <h3>Avg MAO (Maximum Allowed Offer)</h3>
+        <p id="avg-mao">$0</p>
+      </div>
+    </div>
 
-<label for="profit">Buyer Profit Margin (%):</label>
-<input type="number" id="profit" value="30" required>
+    <!-- Calculator -->
+    <div class="card">
+      <h3>New Deal</h3>
 
-<label for="assignment">Assignment Fee:</label>
-<input type="number" id="assignment" required>
+      <input type="number" id="arv" placeholder="ARV (After Repair Value)">
+      <input type="number" id="repairs" placeholder="Repair Costs">
+      <input type="number" id="profit" value="30" placeholder="Profit %">
+      <input type="number" id="assignment" placeholder="Assignment Fee">
+      <input type="number" id="closing" value="0" placeholder="Closing Costs">
 
-<label for="closing">Closing Costs (optional):</label>
-<input type="number" id="closing" value="0">
+      <button id="calculate-btn">Calculate Deal</button>
 
-<button type="button" id="calculate-btn">Calculate MAO</button>
+      <p id="result"></p>
+      <div id="success" class="success-message">Deal saved ✅</div>
 
-<div class="result" id="result"></div>
-<div class="success-message" id="success">✅ Your deal was saved successfully!</div>
-</form>
+      <canvas id="dealChart"></canvas>
+    </div>
 
-<div id="dashboard" class="dashboard">
-  <h3>Your Saved Deals</h3>
-  <div id="deals-list"></div>
+    <!-- Deals -->
+    <div class="card">
+      <h3>Saved Deals</h3>
+      <div id="deals-list"></div>
+    </div>
+
+  </main>
 </div>
 
-</div>
-
-<!-- Link JS -->
 <script src="script.js"></script>
-
 </body>
 </html>
