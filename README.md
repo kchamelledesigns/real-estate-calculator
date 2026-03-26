@@ -8,7 +8,7 @@ A browser-based, portfolio-ready SaaS tool designed to help real estate wholesal
 
 ## 🔹 Features
 
-Deal Calculator: Input ARV, repair costs, profit margin, assignment fee, and closing costs. Calculate MAO instantly.
+Deal Calculator: Input ARV (After Repair Value), repair costs, profit margin, assignment fee, and closing costs. Calculate MAO instantly.
 Local Storage Dashboard: Save deals locally — no backend required.
 Edit & Delete Deals: Manage your deals efficiently.
 Deal Charts: Visualize deal breakdowns with dynamic charts.
