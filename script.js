@@ -11,6 +11,8 @@ function login() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
 
+  document.querySelector('.app').style.display = 'flex';
+
   document.getElementById('user-email').innerText = email;
 
   loadDeals();
@@ -31,7 +33,7 @@ function calculateMAO() {
   const assignment = parseFloat(document.getElementById('assignment').value);
   const closing = parseFloat(document.getElementById('closing').value);
 
-  if (isNaN(arv) || isNaN(repairs) || isNaN(profit) || isNaN(assignment) || isNaN(closing)) {
+  if ([arv, repairs, profit, assignment, closing].some(isNaN)) {
     alert("Fill all fields");
     return;
   }
@@ -59,7 +61,6 @@ function calculateMAO() {
   renderChart(repairs, buyerProfit, assignment, closing);
   loadDeals();
 
-  // reset inputs
   document.getElementById('arv').value = '';
   document.getElementById('repairs').value = '';
   document.getElementById('assignment').value = '';
@@ -70,7 +71,7 @@ function calculateMAO() {
 function showSuccess() {
   const msg = document.getElementById('success');
   msg.style.display = 'block';
-  setTimeout(() => msg.style.display = 'none', 3000);
+  setTimeout(() => msg.style.display = 'none', 2500);
 }
 
 // LOAD DEALS
@@ -85,10 +86,10 @@ function loadDeals() {
     div.classList.add('deal-card');
 
     div.innerHTML = `
-      <p>ARV: $${deal.arv}</p>
-      <p>MAO: $${deal.mao}</p>
-      <p>Profit: ${deal.profit}%</p>
-      <p>Date: ${new Date(deal.date).toLocaleDateString()}</p>
+      <p><strong>ARV:</strong> $${deal.arv}</p>
+      <p><strong>MAO:</strong> $${deal.mao}</p>
+      <p><strong>Profit:</strong> ${deal.profit}%</p>
+      <p><strong>Date:</strong> ${new Date(deal.date).toLocaleDateString()}</p>
 
       <div class="deal-actions">
         <button class="edit-btn" onclick="editDeal(${index})">Edit</button>
@@ -148,7 +149,7 @@ function renderChart(repairs, profit, assignment, closing) {
       labels: ['Repairs', 'Profit', 'Assignment', 'Closing'],
       datasets: [{
         data: [repairs, profit, assignment, closing],
-        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+        backgroundColor: ['#ef4444', '#3b82f6', '#f59e0b', '#10b981']
       }]
     }
   });

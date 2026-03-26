@@ -7,60 +7,72 @@
 
 <link rel="stylesheet" href="style.css" />
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="login-screen" class="login-screen">
-  <h2>Real Estate Dashboard</h2>
-  <input type="email" id="email" placeholder="Enter your email" />
-  <button onclick="login()">Enter Dashboard</button>
+  <div class="login-card">
+    <h2>Welcome Back</h2>
+    <p>Enter your email to access your dashboard</p>
+    <input type="email" id="email" placeholder="you@example.com" />
+    <button onclick="login()">Enter Dashboard</button>
+  </div>
 </div>
 
-<!-- MAIN APP -->
-<div class="app" id="app" style="display:none;">
+<!-- APP -->
+<div class="app" id="app">
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <h2>My Deals</h2>
-    <p id="user-email"></p>
+    <div>
+      <h2 class="logo">My Deals</h2>
+      <p id="user-email" class="user-email"></p>
+    </div>
     <button onclick="logout()">Logout</button>
   </aside>
 
   <!-- Main -->
   <main class="main">
 
-    <h1>Deal Dashboard</h1>
+    <div class="topbar">
+      <h1>Dashboard</h1>
+    </div>
 
     <!-- Stats -->
     <div class="stats">
-      <div class="card">
-        <h3>Total Deals</h3>
-        <p id="total-deals">0</p>
+      <div class="card stat-card">
+        <p>Total Deals</p>
+        <h2 id="total-deals">0</h2>
       </div>
-      <div class="card">
-        <h3>Avg MAO (Maximum Allowed Offer)</h3>
-        <p id="avg-mao">$0</p>
+      <div class="card stat-card">
+        <p>Average MAO (Maximum Allowed Offer)</p>
+        <h2 id="avg-mao">$0</h2>
       </div>
     </div>
 
     <!-- Calculator -->
     <div class="card">
-      <h3>New Deal</h3>
+      <h3>Create New Deal</h3>
 
-      <input type="number" id="arv" placeholder="ARV (After Repair Value)">
-      <input type="number" id="repairs" placeholder="Repair Costs">
-      <input type="number" id="profit" value="30" placeholder="Profit %">
-      <input type="number" id="assignment" placeholder="Assignment Fee">
-      <input type="number" id="closing" value="0" placeholder="Closing Costs">
+      <div class="grid">
+        <input type="number" id="arv" placeholder="ARV (After Repair Value)">
+        <input type="number" id="repairs" placeholder="Repair Costs">
+        <input type="number" id="profit" value="30" placeholder="Profit %">
+        <input type="number" id="assignment" placeholder="Assignment Fee">
+        <input type="number" id="closing" value="0" placeholder="Closing Costs">
+      </div>
 
       <button id="calculate-btn">Calculate Deal</button>
 
-      <p id="result"></p>
-      <div id="success" class="success-message">Deal saved ✅</div>
+      <p id="result" class="result"></p>
+      <div id="success" class="success-message">Deal saved successfully</div>
 
       <canvas id="dealChart"></canvas>
     </div>
