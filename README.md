@@ -6,41 +6,46 @@ A browser-based, portfolio-ready SaaS tool designed to help real estate wholesal
 
 ---
 
-## 🔹 Features
+## ✨ Features
 
-Deal Calculator: Input ARV (After Repair Value), repair costs, profit margin, assignment fee, and closing costs. Calculate MAO instantly.\
-Local Storage Dashboard: Save deals locally — no backend required.\
-Edit & Delete Deals: Manage your deals efficiently.\
-Deal Charts: Visualize deal breakdowns with dynamic charts.\
-Premium UI: Clean, modern, startup-style SaaS dashboard.\
-Responsive Design: Works on desktop and mobile.
+1. Deal Calculator: Calculate MAO instantly.
+- Input ARV (After Repair Value), 
+- repair costs, 
+- profit margin, 
+- assignment fee 
+- closing costs
+2. Local Storage Dashboard: Save deals locally — no backend required.\
+3. Edit & Delete Deals: Manage your deals efficiently.\
+4. Deal Charts: Visualize deal breakdowns with dynamic charts.\
+5. Premium UI: Clean, modern, startup-style SaaS dashboard.\
+6. Responsive Design: Works on desktop and mobile.
 
 ---
 
 ### 🧩 How to Use
 
-Enter your email to access the dashboard.\
-Fill in deal details:\
-ARV (After Repair Value)\
-Repair Costs\
-Desired Profit % (default: 30%)\
-Assignment Fee\
-Closing Costs (optional)\
-Click Calculate Deal.\
-View your MAO, deal chart, and save your deals to your local dashboard.\
-Edit or delete saved deals directly from the dashboard.
+1. Enter your email to access the dashboard.
+2. Fill in deal details:
+- ARV (After Repair Value)
+- Repair Costs
+- Desired Profit % (default: 30%)
+- Assignment Fee
+- Closing Costs (optional)
+3. Click Calculate Deal.
+4. View your MAO, deal chart, and save your deals to your local dashboard.
+5. Edit or delete saved deals directly from the dashboard.
 
 ---
 
 ### 🛠 Tech Stack
 
-HTML5\
-CSS3 (custom SaaS theme)\
-JavaScript (vanilla JS)\
-Chart.js\
- for visual deal breakdowns\
-LocalStorage for data persistence\
-GitHub Pages for hosting
+- HTML5
+- CSS3 (custom SaaS theme)
+- JavaScript (vanilla JS)
+- Chart.js
+  * for visual deal breakdowns
+- LocalStorage for data persistence
+- GitHub Pages for hosting
 
 ---
 
@@ -54,9 +59,9 @@ GitHub Pages for hosting
 
 ### 📦 Installation / Deployment
 
-Clone or download this repository.\
-Open index.html in your browser or deploy using GitHub Pages for online access.\
-Start calculating and saving your deals instantly!
+- Clone or download this repository.\
+- Open index.html in your browser or deploy using GitHub Pages for online access.\
+- Start calculating and saving your deals instantly!
 
 ---
 
@@ -73,12 +78,12 @@ Start calculating and saving your deals instantly!
 
 ---
 
-### 🚀 Future Plans
+### 🚀 Future Improvements
 
-User authentication with cloud-based deal storage\
-Export deals to PDF or CSV\
-Optional email notifications for deals\
-Multi-user support
+- User authentication with cloud-based deal storage\
+- Export deals to PDF or CSV\
+- Optional email notifications for deals\
+- Multi-user support
 
 ---
 
@@ -91,3 +96,7 @@ Multi-user support
 ### 📫 Contact
 
 For questions, feedback, or customization: [kchamelledesigns@gmail.com](mailto:kchamelledesigns@gmail.com)
+
+---
+
+⭐ If you found this project helpful, consider giving it a star!
